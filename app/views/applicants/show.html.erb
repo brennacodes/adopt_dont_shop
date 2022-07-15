@@ -19,10 +19,11 @@
         <td><%= @applicant.name %></td>
         <td><%= @applicant.address %></td>
         <td><%= @applicant.description %></td>
-        <td><%= link_to "#{@applicant.pets}", "/applicants/#{@applicant.id}/pets" %></td>
+        <td><%= Pet.all.pluck(:name) %></td>
+        <%# <td><%= link_to "#{@applicant.pets}", "/applicants/#{@applicant.id}/pets" %>
         <td><%= @applicant.status %></td>
-        <td><a href="/applicants/#{@applicant.id}/edit %>" type="button" class="btn btn-outline-primary btn-sm" >Edit</a></td>
-        <td><%= button_to 'Delete', applicant_path(@applicant), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><a href="/applicants/#{@applicant.id}/edit" type="button" class="btn btn-outline-primary btn-sm" >Edit</a></td>
+        <td><%= button_to 'Delete', "/applicants/#{@applicant.id}", method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
   </tbody>
 </table>
@@ -37,12 +38,13 @@
         </div>
 
         <div class="col">
-          <a href="<%= applicant_cases_path %>" type="button" class="btn btn-outline-primary">View All Cases</a>
+          <a href="/applicants" type="button" class="btn btn-outline-primary">View All Applicants</a>
         </div>
 
         <div class="col">
-              <a href="<%= new_applicant_path %>" type="button" class="btn btn-outline-primary">New Department</a>
+              <a href="applicants" type="button" class="btn btn-outline-primary">New Application</a>
         </div>
     </div>
   </div>
+
 <p id="notice"><%= notice %></p>
