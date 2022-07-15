@@ -16,10 +16,12 @@ RSpec.describe 'Application Show Page' do
   let!(:shelter_3_pet_1) {shelter_3.pets.create(name: 'Lucille Bald', breed: 'sphynx', age: 8, adoptable: true)}
   let!(:shelter_3_pet_2) {shelter_3.pets.create(name: 'Bella', breed: 'sphynx', age: 2, adoptable: true)}
   let!(:shelter_4_pet_1) {shelter_4.pets.create(name: 'Bella', breed: 'sphynx', age: 2, adoptable: true)}
+  
+  before do
+    visit "/applicants/#{sally.id}"
+  end
 
   it 'can show applicants information' do
-    visit "/applicants/#{sally.id}"
-
     expect(page).to have_content("Sally")
     expect(page).to have_content("123 California St, Boulder, CO, 80304")
     expect(page).to have_content("I rock!")
@@ -28,5 +30,30 @@ RSpec.describe 'Application Show Page' do
 
     # expect(page).to have_selector(:link_or_button, "Bella")
     
+  end
+
+  # When I visit an application's show page
+  # And that application has not been submitted,
+  # Then I see a section on the page to "Add a Pet to this Application"
+  # In that section I see an input where I can search for Pets by name
+  # When I fill in this field with a Pet's name
+  # And I click submit,
+  # Then I am taken back to the application show page
+  # And under the search bar I see any Pet whose name matches my search
+  it 'can add a pet to an application' do
+    expect(page).to have_content("pending")
+    expect(page).to have_content("Add a Pet to this Application")
+    expect(page).to have_content("Search for a Pet")
+
+    fill_in "Search for a Pet", with: "Bella"
+    click_on "Search"
+
+    expect(page).to have_content("Bella")
+    expect(page).to have_content("Add this Pet to this Application")
+    expect(page).to have_content("Bella")
+    expect(page).to have_content("sphynx")
+    expect(page).to have_content("2")
+    expect(page).to have_content("Adoptable")
+    expect(page).to have_content("Add Pet")
   end
 end
