@@ -23,16 +23,22 @@
 <% if @applicant.status == "In Progress" %>
   <p><strong>Add a Pet to this Application</strong></p>
     <%= form_with url: "/applicants/#{@applicant.id}?search=pet_name", method: :get, local: true do |f| %>
-      <%= f.label :pet_name %>
-      <%= f.text_field :pet_name %>
+      <%= f.label :search %>
+      <%= f.text_field :search %>
       <%= f.submit 'Search' %>
     <% end %>
 <%end%>
 
+<% if @pets_found.present? %>
+  <% @pets_found.each do |pet| %>
+    <% form_with url: "/applicants/#{@applicant.id}", method: post%>
+    <%= link_to "#{pet.name}", "/pets/#{pet.id}" %>
+    <%= button_to "Apply for #{pet.name}", "/applicants/#{@applicant.id}", method: :post, params { pet_id: pet.id } %>
+  <% end %>
+<% end %>
 
 <br>
 <br>
 <br>
 <br>
 <br>
-
