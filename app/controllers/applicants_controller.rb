@@ -4,6 +4,7 @@ class ApplicantsController < ApplicationController
   end
 
   def new
+    @applicant = Applicant.new
   end
 
   def edit
@@ -14,13 +15,13 @@ class ApplicantsController < ApplicationController
   end
 
   def create
-    applicant = Applicant.create(applicant_params)
-    # binding.pry
-    redirect_to "/applicants/#{applicant.id}"
+    applicant = Applicant.create!(applicant_params)
   end
 
   def update
     applicant = Applicant.find(params[:id])
+    applicant.update(applicant_params)
+    redirect_to
   end
 
   def destroy
@@ -28,7 +29,4 @@ class ApplicantsController < ApplicationController
 
   private
 
-  def applicant_params
-    params.permit(:name, :address, :description)
-  end
 end
