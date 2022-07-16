@@ -4,6 +4,7 @@ class ApplicantsController < ApplicationController
   end
   
   def new
+    @add_pet = ApplicantPet.new(params[:applicant_id], params[:pet_id])
   end
   
   def edit
@@ -11,7 +12,11 @@ class ApplicantsController < ApplicationController
   
   def show
     @applicant = Applicant.find(params[:id])
-    @pets = Pet.adoptable.search_pets(params[:search])
+    if params[:search]
+      @pets_found = Pet.adoptable.search_pets(params[:search])
+    else
+      render :notice => "No pets found"
+    end
   end
 
   def create
