@@ -1,6 +1,8 @@
 require 'rails_helper'
 
+
 RSpec.describe 'applicant show page' do
+
   let!(:shelter_1) {Shelter.create!(name: 'Aurora shelter', city: 'Aurora, CO', foster_program: false, rank: 9)}
   let!(:shelter_2) {Shelter.create!(name: 'RGV animal shelter', city: 'Harlingen, TX', foster_program: false, rank: 5)}
   let!(:shelter_3) {Shelter.create!(name: 'Fancy pets of Colorado', city: 'Denver, CO', foster_program: true, rank: 10)}
@@ -22,6 +24,7 @@ RSpec.describe 'applicant show page' do
   end
 
   it 'can show applicants information' do
+
     within "tbody" do
       expect(page).to have_content("Sally")
       expect(page).to have_content("123 California St, Boulder, CO, 80304")
@@ -31,15 +34,7 @@ RSpec.describe 'applicant show page' do
       # expect(page).to have_selector(:link_or_button, "Bella")
     end
   end
-
-  # When I visit an application's show page
-  # And that application has not been submitted,
-  # Then I see a section on the page to "Add a Pet to this Application"
-  # In that section I see an input where I can search for Pets by name
-  # When I fill in this field with a Pet's name
-  # And I click submit,
-  # Then I am taken back to the application show page
-  # And under the search bar I see any Pet whose name matches my search
+ 
   it 'can add a pet to an application while the application is in progress' do
     expect(page).to have_content("In Progress")
     expect(page).to have_content("Add a Pet to this Application")
@@ -48,8 +43,8 @@ RSpec.describe 'applicant show page' do
     fill_in "Search for a Pet", with: "Bella"
     click_on "Search"
 
+
     expect(page).to have_content("Bella")
     expect(page).to have_content("Add this Pet to this Application")
   end
-
 end
