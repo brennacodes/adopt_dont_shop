@@ -1,2 +1,5 @@
-<h1>Applicants#index</h1>
-<p>Find me in app/views/applicants/index.html.erb</p>
+<h1>Applications</h1>
+
+<% @applicants.each do |applicant| %>
+  <%= link_to applicant.name, "/applicants/#{applicant.id}" %>
+<% end %>
