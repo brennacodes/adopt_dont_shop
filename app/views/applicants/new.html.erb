@@ -1,2 +1,12 @@
-<h1>Applicants#new</h1>
-<p>Find me in app/views/applicants/new.html.erb</p>
+<h1> New Applicants</h1>
+
+<%= form_with url: "/applicants", method: :post, local: true do |form| %>
+  <%= form.label :name %>
+  <%= form.text_field :name, null: false%>
+  <%= form.label :address %>
+
+  <%= form.text_field :address, null: false%>
+  <%= form.label :description %>
+  <%= form.text_field :description %>
+  <%= form.submit 'Create Application' %>
+<% end %>
