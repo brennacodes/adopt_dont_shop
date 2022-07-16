@@ -4,7 +4,6 @@ class ApplicantsController < ApplicationController
   end
   
   def new
-    @add_pet = ApplicantPet.new(params[:applicant_id], params[:pet_id])
   end
   
   def edit
@@ -17,6 +16,13 @@ class ApplicantsController < ApplicationController
     else
       render :notice => "No pets found"
     end
+  end
+
+  def addpet
+    applicant = Applicant.find(params[:id])
+    pet = Pet.find(params[:pet_id])
+    ApplicantPet.create(applicant: applicant, pet: pet)
+    redirect_to "/applicants/#{applicant.id}"
   end
 
   def create
