@@ -24,6 +24,13 @@ RSpec.describe 'applicant show page' do
   end
 
   it 'can show applicants information' do
+    visit "/applicants/#{@applicant.id}"
+
+    expect(page).to have_content("Sally")
+    expect(page).to have_content("123 California St, Boulder, CO, 80304")
+    expect(page).to have_content("I rock!")
+    expect(page).to have_content("Pending")
+    expect(page).to have_content("Bella")
 
     within "tbody" do
       expect(page).to have_content("Sally")
@@ -43,6 +50,7 @@ RSpec.describe 'applicant show page' do
     fill_in "Search for a Pet", with: "Bella"
     click_on "Search"
 
+    # expect(page).to have_selector(:link_or_button, "Bella")
 
     expect(page).to have_content("Bella")
     expect(page).to have_content("Add this Pet to this Application")

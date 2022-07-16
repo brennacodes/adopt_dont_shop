@@ -3,7 +3,7 @@ class Applicant < ApplicationRecord
   has_many :pets, through: :applicant_pets
 
   attribute :status, default: "In Progress"
-  validates_presence_of :name, :address, :description, :status
+  validates_presence_of :name, :address, :description
 
   def application_submitted
     write_attribute(:status, "Pending")
