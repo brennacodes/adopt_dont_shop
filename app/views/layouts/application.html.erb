@@ -10,6 +10,11 @@
   </head>
 
   <body>
+    <% flash.each do |type, msg| %>
+    <div>
+      <%= msg %>
+    </div>
+  <% end %>
 
     <nav>
       <%= link_to "Pets", "/pets" %>
@@ -20,6 +25,6 @@
     </nav>
 
     <%= yield %>
-    
+
   </body>
 </html>

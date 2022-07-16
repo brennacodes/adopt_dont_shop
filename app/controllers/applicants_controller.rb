@@ -2,13 +2,13 @@ class ApplicantsController < ApplicationController
   def index
     @applicants = Applicant.current_applicants
   end
-  
+
   def new
   end
-  
+
   def edit
   end
-  
+
   def show
     @applicant = Applicant.find(params[:id])
     @pets = Pet.adoptable.search_pets(params[:search])
@@ -16,10 +16,13 @@ class ApplicantsController < ApplicationController
 
   def create
     applicant = Applicant.create(applicant_params)
-    # binding.pry
-    redirect_to "/applicants/#{applicant.id}"
+    if applicant[:name].empty? || applicant[:address].empty? || applicant[:description].empty?
+      redirect_to "/applicants/new", notice: "You cannot submit an application with any fields left blank"
+    else
+      redirect_to "/applicants/#{applicant.id}"
+    end
   end
-
+  
   def update
     applicant = Applicant.find(params[:id])
 
@@ -32,7 +35,7 @@ class ApplicantsController < ApplicationController
   end
 
   private
-  
+
   def applicant_params
     params.permit(:name, :address, :description)
   end
