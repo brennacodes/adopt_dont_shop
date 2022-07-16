@@ -7,14 +7,6 @@
 
   <%= form.text_field :address, null: false%><br><br>
   <%= form.label :description %>
-  <%= form.text_field :description %><br><br>
+  <%= form.text_field :description %><br> <br>
   <%= form.submit 'Create Application' %>
-
-
-  <% flash.each do |type, msg| %>
-    <div style="color:red">
-      <%= msg %>
-    </div>
-  <% end %>
-
 <% end %>
