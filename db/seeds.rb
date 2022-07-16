@@ -17,9 +17,9 @@ shelter_3 = Shelter.create!(name: 'Fancy pets of Colorado', city: 'Denver, CO', 
 shelter_4 = Shelter.create!(name: 'Habitat for Animals', city: 'Coulder, CO', foster_program: true, rank: 7)
 
 sally = Applicant.create!(name: 'Sally', address: '123 California St, Boulder, CO, 80304', description: 'I rock!', status: "Pending")
-sally = Applicant.create!(name: 'Joe', address: '321 Jones St, Grand Junction, CO, 87654', description: 'I like dags!', status: "Rejected")
-sally = Applicant.create!(name: 'Peyton', address: '456 Manning St, Fort Collins, CO, 85214', description: 'I rock!', status: "In Progress")
-sally = Applicant.create!(name: 'Betty', address: '654 White St, Denver, CO, 80211', description: 'I rock!', status: "Accepted")
+joe = Applicant.create!(name: 'Joe', address: '321 Jones St, Grand Junction, CO, 87654', description: 'I like dags!', status: "Rejected")
+peyton = Applicant.create!(name: 'Peyton', address: '456 Manning St, Fort Collins, CO, 85214', description: 'I rock!', status: "In Progress")
+betty = Applicant.create!(name: 'Betty', address: '654 White St, Denver, CO, 80211', description: 'I rock!', status: "Accepted")
 
 shelter_1.pets.create(name: 'Mr. Pirate', breed: 'tuxedo shorthair', age: 5, adoptable: true)
 shelter_1.pets.create(name: 'Clawdia', breed: 'shorthair', age: 3, adoptable: true)
