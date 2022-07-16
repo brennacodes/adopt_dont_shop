@@ -4,22 +4,22 @@
 <p><strong>Address: </strong><%= @applicant.address %></p>
 <p><strong>Application Status: </strong><%= @applicant.status %></p>
 
-
 <br>
 
 <p><strong>Why I'd be a good home: </strong><%= @applicant.description %></p>
 
-<p><strong>Pets Applied For: </strong></p>
-<% @applicant.pets.each do |pet| %>
-<%# -------these lines don't work yet------- %>
-  <% if @cart.empty? %>
-    <p><i>You haven't applied for any pets.</i></p>
-  <% else %>
-    <p><%= link_to "#{pet.name}", "/pets/#{pet.id}" %></p>
+<div class="pets_applied">
+  <p><strong>Pets Applied For: </strong></p>
+  <% @applicant.pets.each do |pet| %>
+    <% if @applicant.pets.empty? %>
+      <p><i>You haven't applied for any pets.</i></p>
+    <% else %>
+      <p><%= link_to "#{pet.name}", "/pets/#{pet.id}" %></p>
+    <% end %>
   <% end %>
-<%# -------these lines don't work yet------- %>
-<% end %>
+</div>
 
+<div class="pet_search">
 <% if @applicant.status == "In Progress" %>
   <p><strong>Add a Pet to this Application</strong></p>
     <%= form_with url: "/applicants/#{@applicant.id}?search=pet_name", method: :get, local: true do |f| %>
@@ -29,13 +29,13 @@
     <% end %>
 <%end%>
 
-<% if @pets_found.present? %>
-  <% @pets_found.each do |pet| %>
-    <% form_with url: "/applicants/#{@applicant.id}", method: post%>
-    <%= link_to "#{pet.name}", "/pets/#{pet.id}" %>
-    <%= button_to "Apply for #{pet.name}", "/applicants/#{@applicant.id}", method: :post, params { pet_id: pet.id } %>
+<div class="pet_results">
+  <% if @pets_found.present? %>
+    <% @pets_found.each do |pet| %>
+        <div class="row"><%= link_to "#{pet.name}", "/pets/#{pet.id}" %> <%= button_to "Add Pet to Application", "/applicants/#{@applicant.id}", method: :post, params: { :pet_id=> pet.id } %></div>
+    <% end %>
   <% end %>
-<% end %>
+</div>
 
 <br>
 <br>
