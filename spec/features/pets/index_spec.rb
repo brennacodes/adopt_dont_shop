@@ -81,7 +81,6 @@ RSpec.describe 'the pets index' do
     expect(page).to have_content(pet_2.name)
     expect(page).to_not have_content(pet_3.name)
   end
-
   #user story 2 starting an application
   it 'can start an application for a new Pet' do
     shelter = Shelter.create(name: 'Aurora shelter', city: 'Aurora, CO', foster_program: false, rank: 9)
@@ -89,8 +88,10 @@ RSpec.describe 'the pets index' do
     pet_2 = Pet.create(adoptable: true, age: 3, breed: 'doberman', name: 'Lobster', shelter_id: shelter.id)
 
     visit '/pets'
-    expect(page).to have_link('Start an Application', href: '/applicants/new')
+    expect(page).to have_content('Start an Application')
+    
     click_link 'Start an Application'
+
     expect(current_path).to eq('/applicants/new')
 
   end
