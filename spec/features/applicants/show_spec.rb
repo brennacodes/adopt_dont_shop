@@ -2,7 +2,6 @@ require 'rails_helper'
 
 
 RSpec.describe 'applicant show page' do
-
   let!(:shelter_1) {Shelter.create!(name: 'Aurora shelter', city: 'Aurora, CO', foster_program: false, rank: 9)}
   let!(:shelter_2) {Shelter.create!(name: 'RGV animal shelter', city: 'Harlingen, TX', foster_program: false, rank: 5)}
   let!(:shelter_3) {Shelter.create!(name: 'Fancy pets of Colorado', city: 'Denver, CO', foster_program: true, rank: 10)}
@@ -18,41 +17,54 @@ RSpec.describe 'applicant show page' do
   let!(:shelter_3_pet_1) {shelter_3.pets.create(name: 'Lucille Bald', breed: 'sphynx', age: 8, adoptable: true)}
   let!(:shelter_3_pet_2) {shelter_3.pets.create(name: 'Bella', breed: 'sphynx', age: 2, adoptable: false)}
   let!(:shelter_4_pet_1) {shelter_4.pets.create(name: 'Pipo', breed: 'ragdoll', age: 2, adoptable: true)}
-  
+
   before do
-    visit "/applicants/#{sally.id}"
+    visit "/applicants/#{peyton.id}"
   end
 
   it 'can show applicants information' do
-    visit "/applicants/#{@applicant.id}"
-
-    expect(page).to have_content("Sally")
-    expect(page).to have_content("123 California St, Boulder, CO, 80304")
+    expect(page).to have_content("Peyton")
+    expect(page).to have_content("456 Manning St, Fort Collins, CO, 85214")
     expect(page).to have_content("I rock!")
-    expect(page).to have_content("Pending")
-    expect(page).to have_content("Bella")
+    expect(page).to have_content("In Progress")
 
-    within "tbody" do
-      expect(page).to have_content("Sally")
-      expect(page).to have_content("123 California St, Boulder, CO, 80304")
-      expect(page).to have_content("I rock!")
-      expect(page).to have_content("Pending")
-      expect(page).to have_content("Bella")
-      # expect(page).to have_selector(:link_or_button, "Bella")
+    expect(page).not_to have_content("Pending")
+    expect(page).not_to have_content("Submit Application")
+    expect(page).not_to have_content("Mr. Pirate")
+  end
+
+  it 'can search for a pet' do
+    within ".pet_search" do
+      expect(page).to have_content("Search")
+
+      fill_in "search", with: "Mr. Pirate"
+      click_on "Search"
+
+      expect(current_path).to eq("/applicants/#{peyton.id}")
+      expect(page).to have_content("Mr. Pirate")
+      expect(page).to have_button("Add Pet to Application")
     end
   end
- 
-  it 'can add a pet to an application while the application is in progress' do
-    expect(page).to have_content("In Progress")
-    expect(page).to have_content("Add a Pet to this Application")
-    expect(page).to have_content("Search for a Pet")
 
-    fill_in "Search for a Pet", with: "Bella"
-    click_on "Search"
+  it 'can add a pet to an applicant' do
+    within ".pet_search" do
+      expect(page).to have_content("Search")
 
-    # expect(page).to have_selector(:link_or_button, "Bella")
+      fill_in "search", with: "Mr. Pirate"
+      click_on "Search"
 
-    expect(page).to have_content("Bella")
-    expect(page).to have_content("Add this Pet to this Application")
+      expect(current_path).to eq("/applicants/#{peyton.id}")
+      expect(page).to have_content("Mr. Pirate")
+      expect(page).to have_button("Add Pet to Application")
+    
+      click_on "Add Pet to Application"
+      
+      expect(current_path).to eq("/applicants/#{peyton.id}")
+    end
+
+      expect(page).to have_content("Mr. Pirate")
+      expect(page).not_to have_content("Add to Application") 
+      expect(page).to have_button("Submit Application")
   end
+
 end
