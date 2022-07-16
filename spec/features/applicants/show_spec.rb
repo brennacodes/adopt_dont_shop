@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Application Show Page' do
+RSpec.describe 'applicant show page' do
   let!(:shelter_1) {Shelter.create!(name: 'Aurora shelter', city: 'Aurora, CO', foster_program: false, rank: 9)}
   let!(:shelter_2) {Shelter.create!(name: 'RGV animal shelter', city: 'Harlingen, TX', foster_program: false, rank: 5)}
   let!(:shelter_3) {Shelter.create!(name: 'Fancy pets of Colorado', city: 'Denver, CO', foster_program: true, rank: 10)}
@@ -14,22 +14,22 @@ RSpec.describe 'Application Show Page' do
   let!(:shelter_1_pet_1) {shelter_1.pets.create(name: 'Mr. Pirate', breed: 'tuxedo shorthair', age: 5, adoptable: true)}
   let!(:shelter_1_pet_2) {shelter_1.pets.create(name: 'Clawdia', breed: 'shorthair', age: 3, adoptable: true)}
   let!(:shelter_3_pet_1) {shelter_3.pets.create(name: 'Lucille Bald', breed: 'sphynx', age: 8, adoptable: true)}
-  let!(:shelter_3_pet_2) {shelter_3.pets.create(name: 'Bella', breed: 'sphynx', age: 2, adoptable: true)}
-  let!(:shelter_4_pet_1) {shelter_4.pets.create(name: 'Bella', breed: 'sphynx', age: 2, adoptable: true)}
+  let!(:shelter_3_pet_2) {shelter_3.pets.create(name: 'Bella', breed: 'sphynx', age: 2, adoptable: false)}
+  let!(:shelter_4_pet_1) {shelter_4.pets.create(name: 'Pipo', breed: 'ragdoll', age: 2, adoptable: true)}
   
   before do
     visit "/applicants/#{sally.id}"
   end
 
   it 'can show applicants information' do
-    expect(page).to have_content("Sally")
-    expect(page).to have_content("123 California St, Boulder, CO, 80304")
-    expect(page).to have_content("I rock!")
-    expect(page).to have_content("Pending")
-    expect(page).to have_content("Bella")
-
-    # expect(page).to have_selector(:link_or_button, "Bella")
-    
+    within "tbody" do
+      expect(page).to have_content("Sally")
+      expect(page).to have_content("123 California St, Boulder, CO, 80304")
+      expect(page).to have_content("I rock!")
+      expect(page).to have_content("Pending")
+      expect(page).to have_content("Bella")
+      # expect(page).to have_selector(:link_or_button, "Bella")
+    end
   end
 
   # When I visit an application's show page
@@ -40,8 +40,8 @@ RSpec.describe 'Application Show Page' do
   # And I click submit,
   # Then I am taken back to the application show page
   # And under the search bar I see any Pet whose name matches my search
-  it 'can add a pet to an application' do
-    expect(page).to have_content("pending")
+  it 'can add a pet to an application while the application is in progress' do
+    expect(page).to have_content("In Progress")
     expect(page).to have_content("Add a Pet to this Application")
     expect(page).to have_content("Search for a Pet")
 
@@ -50,10 +50,6 @@ RSpec.describe 'Application Show Page' do
 
     expect(page).to have_content("Bella")
     expect(page).to have_content("Add this Pet to this Application")
-    expect(page).to have_content("Bella")
-    expect(page).to have_content("sphynx")
-    expect(page).to have_content("2")
-    expect(page).to have_content("Adoptable")
-    expect(page).to have_content("Add Pet")
   end
+
 end
