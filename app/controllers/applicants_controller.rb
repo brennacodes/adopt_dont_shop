@@ -27,9 +27,12 @@ class ApplicantsController < ApplicationController
   end
 
   def create
-    applicant = Applicant.create!(applicant_params)
-    # binding.pry
-    redirect_to "/applicants/#{applicant.id}"
+    applicant = Applicant.create(applicant_params)
+    if applicant[:name].empty? || applicant[:address].empty? || applicant[:description].empty?
+      redirect_to "/applicants/new", notice: "You cannot submit an application with any fields left blank"
+    else
+      redirect_to "/applicants/#{applicant.id}"
+    end
   end
 
   def update
