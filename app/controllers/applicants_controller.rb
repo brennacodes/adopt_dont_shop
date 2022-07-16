@@ -11,6 +11,7 @@ class ApplicantsController < ApplicationController
   
   def show
     @applicant = Applicant.find(params[:id])
+    @applicants_pets = @applicant.pets.distinct
     if params[:search]
       @pets_found = Pet.adoptable.search_pets(params[:search])
     else
@@ -21,12 +22,12 @@ class ApplicantsController < ApplicationController
   def addpet
     applicant = Applicant.find(params[:id])
     pet = Pet.find(params[:pet_id])
-    ApplicantPet.create(applicant: applicant, pet: pet)
+    ApplicantPet.create!(applicant: applicant, pet: pet)
     redirect_to "/applicants/#{applicant.id}"
   end
 
   def create
-    applicant = Applicant.create(applicant_params)
+    applicant = Applicant.create!(applicant_params)
     # binding.pry
     redirect_to "/applicants/#{applicant.id}"
   end

@@ -4,17 +4,17 @@
 <p><strong>Address: </strong><%= @applicant.address %></p>
 <p><strong>Application Status: </strong><%= @applicant.status %></p>
 
-<br>
-
 <p><strong>Why I'd be a good home: </strong><%= @applicant.description %></p>
 
 <div class="pets_applied">
   <p><strong>Pets Applied For: </strong></p>
-  <% @applicant.pets.each do |pet| %>
-    <% if @applicant.pets.empty? %>
+  <% @applicants_pets.each do |pet| %>
+    <% if @applicants_pets.empty? %>
       <p><i>You haven't applied for any pets.</i></p>
     <% else %>
-      <p><%= link_to "#{pet.name}", "/pets/#{pet.id}" %></p>
+      <ul>
+        <li><%= link_to "#{pet.name}", "/pets/#{pet.id}" %></li>
+      </ul>
     <% end %>
   <% end %>
 </div>
@@ -38,6 +38,14 @@
 </div>
 
 <br>
+
+<div class="submission">
+  <% if !@applicants_pets.empty? && @applicant.status == "In Progress" %>
+    <%= button_to "Submit Application", "/applicants/#{@applicant.id}", method: :create %>
+  <% else %>
+    <p><i>You haven't added any pets to this application!</i></p>
+  <% end %>
+</div>
 <br>
 <br>
 <br>
