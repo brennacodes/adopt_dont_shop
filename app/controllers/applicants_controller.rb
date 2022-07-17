@@ -27,11 +27,13 @@ class ApplicantsController < ApplicationController
   end
 
   def create
-    applicant = Applicant.new(applicant_params)
-    if applicant.save!
-      redirect_to applicant_url(applicant)
-    else
-      render :new, status: :unprocessable_entity
+    @applicant = Applicant.new(applicant_params)
+    respond_to do |format|
+      if @applicant.save
+        format.html { redirect_to "/applicants/#{@applicant.id}", notice: "Applicant was successfully created." }
+      else
+        format.html { render :new, status: :unprocessable_entity }
+      end
     end
     # if applicant[:name].empty? || applicant[:address].empty? || applicant[:description].empty?
     #   redirect_to "/applicants/new", notice: "You cannot submit an application with any fields left blank"
