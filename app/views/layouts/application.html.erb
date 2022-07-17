@@ -12,11 +12,12 @@
   <body>
 
     <nav>
-      <%= link_to "Pets", "/pets" %>
-      <%= link_to "Shelters", "/shelters" %>
-      <%= link_to "Veterinarians", "/veterinarians" %>
-      <%= link_to "Veterinary Offices", "/veterinary_offices" %>
-      <%= link_to "Applicants", "/applicants" %>
+      <%= nav_link("Pets", pets_path) %>
+      <%= nav_link("Applicants", applicants_path) %>
+      <%= nav_link("Shelters", shelters_path) %>
+      <%= nav_link("Veterinarians", veterinarians_path) %>
+      <%= nav_link("Veterinary Offices", veterinary_offices_path) %>
+      <%= link_to "Admin", "/admin" %>
     </nav>
 
     <%= yield %>
