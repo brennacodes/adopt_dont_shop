@@ -34,13 +34,12 @@ class ApplicantsController < ApplicationController
       redirect_to "/applicants/#{applicant.id}"
     end
   end
-  
+
   def update
     applicant = Applicant.find(params[:id])
-
-    # applicant.update(applicant_params)
-    # redirect_to applicant_path(applicant)
-
+    applicant.status = "Pending"
+    applicant.save
+    redirect_to "/applicants/#{applicant.id}"
   end
 
   def destroy
