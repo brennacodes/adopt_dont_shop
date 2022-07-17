@@ -2,13 +2,13 @@ class ApplicantsController < ApplicationController
   def index
     @applicants = Applicant.current_applicants
   end
-  
+
   def new
   end
-  
+
   def edit
   end
-  
+
   def show
     @applicant = Applicant.find(params[:id])
     @applicants_pets = @applicant.pets.distinct
@@ -34,7 +34,7 @@ class ApplicantsController < ApplicationController
       redirect_to "/applicants/#{applicant.id}"
     end
   end
-
+  
   def update
     applicant = Applicant.find(params[:id])
 
@@ -47,7 +47,7 @@ class ApplicantsController < ApplicationController
   end
 
   private
-  
+
   def applicant_params
     params.permit(:name, :address, :description)
   end

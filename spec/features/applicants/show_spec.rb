@@ -25,6 +25,7 @@ RSpec.describe 'applicant show page' do
   it 'can show applicants information' do
     expect(page).to have_content("Peyton")
     expect(page).to have_content("456 Manning St, Fort Collins, CO, 85214")
+  
     expect(page).to have_content("I rock!")
     expect(page).to have_content("In Progress")
 
@@ -66,5 +67,4 @@ RSpec.describe 'applicant show page' do
       expect(page).not_to have_content("Add to Application") 
       expect(page).to have_button("Submit Application")
   end
-
 end

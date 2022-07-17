@@ -2,11 +2,11 @@
 
 <%= form_with url: "/applicants", method: :post, local: true do |form| %>
   <%= form.label :name %>
-  <%= form.text_field :name, null: false%>
+  <%= form.text_field :name, null: false%><br><br>
   <%= form.label :address %>
 
-  <%= form.text_field :address, null: false%>
+  <%= form.text_field :address, null: false%><br><br>
   <%= form.label :description %>
-  <%= form.text_field :description %>
+  <%= form.text_field :description %><br> <br>
   <%= form.submit 'Create Application' %>
 <% end %>
