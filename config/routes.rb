@@ -1,11 +1,11 @@
 Rails.application.routes.draw do
   get '/', to: 'application#welcome'
 
-  get '/applicants/new', to: 'applicants#new'
-  get '/applicants/:id', to: 'applicants#show'
+  get '/applicants', to: 'applicants#index'
   post '/applicants', to: 'applicants#create'
-
+  get '/applicants/new', to: 'applicants#new'
   get '/applicants/edit', to: 'applicants#edit'
+  post '/applicants/:id', to: 'applicants#addpet'
   get '/applicants/:id', to: 'applicants#show'
   patch '/applicants/:id', to: 'applicants#update'
   put '/applicants/:id', to: 'applicants#update'

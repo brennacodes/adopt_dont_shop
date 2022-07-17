@@ -11,7 +11,19 @@ class ApplicantsController < ApplicationController
 
   def show
     @applicant = Applicant.find(params[:id])
-    @pets = Pet.adoptable.search_pets(params[:search])
+    @applicants_pets = @applicant.pets.distinct
+    if params[:search]
+      @pets_found = Pet.adoptable.search_pets(params[:search])
+    else
+      render :notice => "No pets found"
+    end
+  end
+
+  def addpet
+    applicant = Applicant.find(params[:id])
+    pet = Pet.find(params[:pet_id])
+    ApplicantPet.create!(applicant: applicant, pet: pet)
+    redirect_to "/applicants/#{applicant.id}"
   end
 
   def create

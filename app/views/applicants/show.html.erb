@@ -1,38 +1,54 @@
 <h1>Application</h1>
 
-<p><strong>Name: </strong><%= @applicant.name %></p>
-<p><strong>Address: </strong><%= @applicant.address %></p>
-<p><strong>Application Status: </strong><%= @applicant.status %></p>
+<section>
+  <p><strong>Name: </strong><%= @applicant.name %></p>
+  <p><strong>Address: </strong><%= @applicant.address %></p>
+  <p><strong>Application Status: </strong><%= @applicant.status %></p>
+  <p><strong>Why I'd be a good home: </strong><%= @applicant.description %></p>
+</section>
 
 
-<br>
-
-<p><strong>Why I'd be a good home: </strong><%= @applicant.description %></p>
-
-<p><strong>Pets Applied For: </strong></p>
-<% @applicant.pets.each do |pet| %>
-<%# -------these lines don't work yet------- %>
-  <% if @cart.empty? %>
-    <p><i>You haven't applied for any pets.</i></p>
-  <% else %>
-    <p><%= link_to "#{pet.name}", "/pets/#{pet.id}" %></p>
+<div class="pets_applied">
+  <p><strong>Pets Applied For: </strong></p>
+  <% @applicants_pets.each do |pet| %>
+    <% if @applicants_pets.empty? %>
+      <p><i>You haven't applied for any pets.</i></p>
+    <% else %>
+      <ul>
+        <li><%= link_to "#{pet.name}", "/pets/#{pet.id}" %></li>
+      </ul>
+    <% end %>
   <% end %>
-<%# -------these lines don't work yet------- %>
-<% end %>
+</div>
 
+<div class="pet_search">
 <% if @applicant.status == "In Progress" %>
   <p><strong>Add a Pet to this Application</strong></p>
     <%= form_with url: "/applicants/#{@applicant.id}?search=pet_name", method: :get, local: true do |f| %>
-      <%= f.label :pet_name %>
-      <%= f.text_field :pet_name %>
+      <%= f.label :search %>
+      <%= f.text_field :search %>
       <%= f.submit 'Search' %>
     <% end %>
 <%end%>
 
+<div class="pet_results">
+  <% if @pets_found.present? %>
+    <% @pets_found.each do |pet| %>
+        <div class="row"><%= link_to "#{pet.name}", "/pets/#{pet.id}" %> <%= button_to "Add Pet to Application", "/applicants/#{@applicant.id}", method: :post, params: { :pet_id=> pet.id } %></div>
+    <% end %>
+  <% end %>
+</div>
 
 <br>
-<br>
-<br>
-<br>
-<br>
 
+<div class="submission">
+  <% if !@applicants_pets.empty? && @applicant.status == "In Progress" %>
+    <%= button_to "Submit Application", "/applicants/#{@applicant.id}", method: :create %>
+  <% else %>
+    <p><i>You haven't added any pets to this application!</i></p>
+  <% end %>
+</div>
+<br>
+<br>
+<br>
+<br>
