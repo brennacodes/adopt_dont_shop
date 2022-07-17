@@ -86,5 +86,11 @@ RSpec.describe 'applicant show page' do
       expect(page).to have_content("Mr. Pirate")
       expect(page).not_to have_content("Add to Application")
       expect(page).to have_button("Submit Application")
+
+      click_on 'Submit Application'
+
+      expect(current_path).to eq("/applicants/#{peyton.id}")
+      expect(page).to have_content("Mr. Pirate")
+      expect(page).not_to have_content('Add to Application')
     end
   end
