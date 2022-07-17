@@ -5,7 +5,7 @@ class Applicant < ApplicationRecord
   attribute :status, default: "In Progress"
   validates_presence_of :name, :address, :description
 
-  after_create :application_submitted
+  # after_create :application_created
 
   def application_submitted
     write_attribute(:status, "Pending")
@@ -22,7 +22,11 @@ class Applicant < ApplicationRecord
     save
   end
 
+  def self.current_applicants
+    where(status: "In Progress")
+  end
+
   def self.pending_applicants
-    where("status != ?", "In Progress").or(where("status != ?", "Rejected")).or(where("status != ?", "Accepted"))
+    where(status: "Pending")
   end
 end
