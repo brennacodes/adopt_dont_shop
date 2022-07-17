@@ -1,6 +1,17 @@
 <h1> New Applicants</h1>
 
 <%= form_with url: "/applicants", method: :post, local: true do |form| %>
+  <% if @applicant.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@applicant.errors.count, "error") %> prohibited this applicant from being saved:</h2>
+
+      <ul>
+      <% @applicant.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
   <%= form.label :name %>
   <%= form.text_field :name, null: false%>
   <%= form.label :address %>
