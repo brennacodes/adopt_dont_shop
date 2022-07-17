@@ -3,8 +3,11 @@ class Pet < ApplicationRecord
   has_many :applicants, through: :applicant_pets
   belongs_to :shelter
   
-  validates :name, presence: true
+  attribute :adoptable, default: true
+
+  validates_presence_of :name, :description, :shelter_id
   validates :age, presence: true, numericality: true
+  validates :adoptable, inclusion: [false, true]
 
   def shelter_name
     shelter.name
