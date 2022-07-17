@@ -5,7 +5,7 @@ class Pet < ApplicationRecord
   
   attribute :adoptable, default: true
 
-  validates_presence_of :name, :description, :shelter_id
+  validates_presence_of :breed, :name, :shelter_id
   validates :age, presence: true, numericality: true
   validates :adoptable, inclusion: [false, true]
 
