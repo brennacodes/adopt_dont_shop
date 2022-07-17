@@ -20,4 +20,13 @@ RSpec.describe 'New Applicants' do
     expect(page).to have_content('123 California St, Boulder, CO, 80304')
     expect(page).to have_content('In Progress')
   end
+
+  it 'can send an error message if the form fields are not filled in' do
+      visit '/applicants/new'
+
+      click_on 'Create Application'
+
+      expect(page).to have_content("You cannot submit an application with any fields left blank")
+      expect(current_path).to eq("/applicants/new")
+  end
 end
