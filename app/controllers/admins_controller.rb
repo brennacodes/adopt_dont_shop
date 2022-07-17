@@ -3,10 +3,11 @@ class AdminsController < ApplicationController
   end
 
   def shelters
-    @shelters = Shelter.all
+    @shelters = Shelter.sorted_by_name_reverse
+    @pending = Shelter.with_pending_applicants
   end
 
   def applicants
-    @applicants = Applicant.all
+    @applicants = Applicant.pending
   end
 end
