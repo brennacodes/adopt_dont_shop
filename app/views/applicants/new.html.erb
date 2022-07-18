@@ -12,6 +12,7 @@
       </ul>
     </div>
   <% end %>
+<section>
   <%= form.label :name %>
   <%= form.text_field :name, null: false%><br><br>
   <%= form.label :address %>
@@ -20,4 +21,5 @@
   <%= form.label :description %>
   <%= form.text_field :description %><br> <br>
   <%= form.submit 'Create Application' %>
+</section>
 <% end %>

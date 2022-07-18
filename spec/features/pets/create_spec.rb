@@ -38,7 +38,7 @@ RSpec.describe 'pet creation' do
 
         click_button 'Save'
         expect(page).to have_current_path("/shelters/#{@shelter.id}/pets/new")
-        expect(page).to have_content("Error: Name can't be blank, Age can't be blank, Age is not a number")
+        expect(page).to have_content("Error: Breed can't be blank, Name can't be blank, Age can't be blank, Age is not a number, Adoptable is not included in the list")
       end
     end
   end

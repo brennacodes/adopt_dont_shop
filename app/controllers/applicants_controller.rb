@@ -4,6 +4,7 @@ class ApplicantsController < ApplicationController
   end
 
   def new
+    @applicant = Applicant.new
   end
 
   def edit
@@ -13,7 +14,7 @@ class ApplicantsController < ApplicationController
     @applicant = Applicant.find(params[:id])
     @applicants_pets = @applicant.pets.distinct
     if params[:search]
-      @pets_found = Pet.adoptable.search_pets(params[:search])
+      @pets_found = Pet.adoptable_pets.search_pets(params[:search])
     else
       render :notice => "No pets found"
     end

@@ -8,6 +8,8 @@
 
 <h2>Shelters with Pending Applications</h2>
 
+<section>
 <% @pending.each do |shelter| %>
   <p><%= link_to shelter.name, "/shelters/#{shelter.id}" %></p>
 <% end %>
+</section>

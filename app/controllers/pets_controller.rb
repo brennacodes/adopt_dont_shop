@@ -3,7 +3,7 @@ class PetsController < ApplicationController
     if params[:search].present?
       @pets = Pet.search(params[:search])
     else
-      @pets = Pet.adoptable
+      @pets = Pet.adoptable_pets
     end
   end
 
