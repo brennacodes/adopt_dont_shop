@@ -30,17 +30,20 @@ RSpec.describe Pet, type: :model do
     end
 
     describe '#adoptable' do
-      it 'has a default value of true' do
-        expect(@pet_1.adoptable).to eq(true)
-      end
-      
       it 'returns adoptable pets' do
-        expect(Pet.adoptable).to eq([@pet_1, @pet_2])
+        expect(Pet.adoptable_pets).to eq([@pet_1, @pet_2])
       end
     end
   end
 
+
   describe 'instance methods' do
+    it 'has a default value of true' do
+      expect(@pet_1.adoptable).to eq(true)
+      @pet_1.adopted
+      expect(@pet_1.adoptable).to eq(false)
+    end
+
     describe '.shelter_name' do
       it 'returns the shelter name for the given pet' do
         expect(@pet_3.shelter_name).to eq(@shelter_1.name)

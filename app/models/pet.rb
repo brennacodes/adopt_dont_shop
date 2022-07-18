@@ -13,7 +13,15 @@ class Pet < ApplicationRecord
     shelter.name
   end
 
-  def self.adoptable
+  def adopted
+    write_attribute(:adoptable, false)
+  end
+
+  def is_adopted?
+    !adoptable
+  end
+
+  def self.adoptable_pets
     where(adoptable: true)
   end
 
