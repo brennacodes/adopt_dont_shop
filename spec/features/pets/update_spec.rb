@@ -41,7 +41,7 @@ RSpec.describe 'the veterinarian update' do
       fill_in 'Name', with: ''
       click_button 'Save'
 
-      expect(page).to have_content("Error: Name can't be blank")
+      expect(page).to have_content("Error: Breed can't be blank")
       expect(page).to have_current_path("/pets/#{pet.id}/edit")
     end
   end
