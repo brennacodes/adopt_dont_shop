@@ -16,14 +16,15 @@ shelter_2 = Shelter.create!(name: 'RGV animal shelter', city: 'Harlingen, TX', f
 shelter_3 = Shelter.create!(name: 'Fancy pets of Colorado', city: 'Denver, CO', foster_program: true, rank: 10)
 shelter_4 = Shelter.create!(name: 'Habitat for Animals', city: 'Coulder, CO', foster_program: true, rank: 7)
 
-sally = Applicant.create!(name: 'Sally', address: '123 California St, Boulder, CO, 80304', description: 'I rock!', status: "Pending")
-joe = Applicant.create!(name: 'Joe', address: '321 Jones St, Grand Junction, CO, 87654', description: 'I like dags!', status: "Rejected")
-peyton = Applicant.create!(name: 'Peyton', address: '456 Manning St, Fort Collins, CO, 85214', description: 'I rock!', status: "In Progress")
-betty = Applicant.create!(name: 'Betty', address: '654 White St, Denver, CO, 80211', description: 'I rock!', status: "Accepted")
+sally = Applicant.new(name: 'Sally', address: '123 California St, Boulder, CO, 80304', description: 'I rock!')
+joe = Applicant.new(name: 'Joe', address: '321 Jones St, Grand Junction, CO, 87654', description: 'I like dags!')
+peyton = Applicant.new(name: 'Peyton', address: '456 Manning St, Fort Collins, CO, 85214', description: 'I am super active!')
+billy = Applicant.new(name: 'Billy', address: '909 Madison St, Morrison, CO, 81808', description: 'I like rocks!')
+rusty = Applicant.new(name: 'Rusty', address: '11 Nail St, Rincon, CO, 88109', description: 'No comment.')
+betty = Applicant.new(name: 'Betty', address: '654 White St, Denver, CO, 80211', description: 'I am not a good owner but I want a pet!')
 
-shelter_1.pets.create(name: 'Mr. Pirate', breed: 'tuxedo shorthair', age: 5, adoptable: true)
-shelter_1.pets.create(name: 'Clawdia', breed: 'shorthair', age: 3, adoptable: true)
-shelter_3.pets.create(name: 'Lucille Bald', breed: 'sphynx', age: 8, adoptable: true)
+shelter_1.pets.create!(name: 'Mr. Pirate', breed: 'tuxedo shorthair', age: 5, adoptable: true)
+shelter_1.pets.create!(name: 'Lucille Bald', breed: 'sphynx', age: 8, adoptable: true)
 shelter_4.pets.create!(name: 'Pipo', breed: 'ragdoll', age: 2, adoptable: false)
 shelter_4.pets.create!(name: 'Lobster', breed: 'doberman', age: 4, adoptable: true)
 

@@ -5,6 +5,7 @@ class Shelter < ApplicationRecord
 
   has_many :pets, dependent: :destroy
   has_many :applicant_pets, through: :pets
+  has_many :applicants, through: :applicant_pets
 
   def self.order_by_recently_created
     order(created_at: :desc)
@@ -31,5 +32,13 @@ class Shelter < ApplicationRecord
 
   def shelter_pets_filtered_by_age(age_filter)
     adoptable_pets.where('age >= ?', age_filter)
+  end
+
+  def self.sorted_by_name_reverse
+    find_by_sql("SELECT * FROM shelters ORDER BY name DESC")
+  end
+
+  def self.with_pending_applicants
+    joins(:pets, :applicants).where('pets.adoptable = ? AND applicants.status = ?', true, 'Pending')
   end
 end
