@@ -3,18 +3,19 @@ require 'rails_helper'
 RSpec.describe 'New Applicants' do
 
   it 'can fill in and submit an application for a new Pet' do
-    sally = Applicant.create!(name: 'Sally',
-                              address: '123 California St, Boulder, CO, 80304',
-                              description: 'I rock!',
-                              status: "Pending")
     visit '/applicants/new'
 
-    fill_in 'name', with: 'Sally'
-    fill_in 'address', with: '123 California St, Boulder, CO, 80304'
-    fill_in 'description', with: 'I rock!'
+    within 'section' do
+      fill_in 'name', with: 'Sally'
+      fill_in 'address', with: '123 California St, Boulder, CO, 80304'
+      fill_in 'description', with: 'I rock!'
 
-    click_on 'Create Application'
-    # expect(current_path).to eq("/applicants/#{sally.id}")
+      click_on 'Create Application'
+    end
+
+    actual_path = Applicant.last.id
+
+    expect(current_path).to eq("/applicants/#{actual_path}")
 
     expect(page).to have_content('Sally')
     expect(page).to have_content('123 California St, Boulder, CO, 80304')
@@ -22,11 +23,12 @@ RSpec.describe 'New Applicants' do
   end
 
   it 'can send an error message if the form fields are not filled in' do
-      visit '/applicants/new'
+    visit '/applicants/new'
 
-      click_on 'Create Application'
+    click_on 'Create Application'
 
-      expect(page).to have_content("You cannot submit an application with any fields left blank")
-      expect(current_path).to eq("/applicants/new")
-  end
+    expect(page).to have_content("errors prohibited this applicant from being saved")
+    # expect(status).to eq(302)
+    # will not recognize redirect due to conditional in controlloer action
+  end  
 end

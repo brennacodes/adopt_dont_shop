@@ -4,6 +4,7 @@ class ApplicantsController < ApplicationController
   end
 
   def new
+    @applicant = Applicant.new
   end
 
   def edit
