@@ -23,24 +23,28 @@ class ApplicantsController < ApplicationController
   def addpet
     applicant = Applicant.find(params[:id])
     pet = Pet.find(params[:pet_id])
-    session[:pet_wanted] = ApplicantPet.new(applicant: applicant, pet: pet)
+    session[:pet_wanted] = ApplicantPet.create!(applicant: applicant, pet: pet)
     redirect_to "/applicants/#{applicant.id}"
   end
 
+  #this method is not working since latest changes
   def create
     @applicant = Applicant.new(applicant_params)
-    respond_to do |format|
-      if @applicant.save
-        format.html { redirect_to "/applicants/#{@applicant.id}", notice: "Applicant was successfully created." }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-      end
+    if @applicant[:name].empty? || @applicant[:address].empty? || @applicant[:description].empty?
+      redirect_to "/applicants/new", notice: "You cannot submit an application with any fields left blank"
+    else
+      @applicant.save
+      redirect_to "/applicants/#{@applicant.id}"
     end
-    # if applicant[:name].empty? || applicant[:address].empty? || applicant[:description].empty?
-    #   redirect_to "/applicants/new", notice: "You cannot submit an application with any fields left blank"
-    # else
-    #   redirect_to "/applicants/#{applicant.id}"
+
+    # respond_to do |format|
+    #   if @applicant.save
+    #     format.html { redirect_to "/applicants/#{@applicant.id}", notice: "Applicant was successfully created." }
+    #   else
+    #     format.html { render :new, status: :unprocessable_entity }
+    #   end
     # end
+
   end
 
   def update
