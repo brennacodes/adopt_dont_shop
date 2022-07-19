@@ -30,12 +30,19 @@ class ApplicantsController < ApplicationController
   #this method is not working since latest changes
   def create
     @applicant = Applicant.new(applicant_params)
-    if @applicant[:name].empty? || @applicant[:address].empty? || @applicant[:description].empty?
-      redirect_to "/applicants/new", notice: "You cannot submit an application with any fields left blank"
-    else
-      @applicant.save
-      redirect_to "/applicants/#{@applicant.id}"
-    end
+      if @applicant.save
+        redirect_to "/applicants/#{@applicant.id}"
+      else
+        flash[:notice] = "You cannot submit an application with any fields left blank"
+        redirect_to "/applicants/new"
+      end
+  end
+    # if @applicant[:name].empty? || @applicant[:address].empty? || @applicant[:description].empty?
+    #   redirect_to "/applicants/new", notice: "You cannot submit an application with any fields left blank"
+    # else
+    #   @applicant.save
+    #   redirect_to "/applicants/#{@applicant.id}"
+    # end
 
     # respond_to do |format|
     #   if @applicant.save
@@ -44,9 +51,6 @@ class ApplicantsController < ApplicationController
     #     format.html { render :new, status: :unprocessable_entity }
     #   end
     # end
-
-  end
-
   def update
     applicant = Applicant.find(params[:id])
     applicant.status = "Pending"
