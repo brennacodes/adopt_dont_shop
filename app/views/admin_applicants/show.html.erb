@@ -1,0 +1,19 @@
+
+
+<div class="pets">
+  <p><strong>Pets Applied For: </strong></p>
+  <% @applicant.pets.each_with_index do |pet, index| %>
+      <div id="pet-<%= index %>">
+    <% if @applicant.pets.empty? %>
+      <p><i>You haven't applied for any pets.</i></p>
+    <% else %>
+      <ul>
+        <span>
+          <li><%= link_to "#{pet.name}","/pets/#{pet.id}" %></li>
+
+            <%= button_to "Approve Application", "/admin/applicants/#{@applicant.id}", method: :patch, params: { pet_id: pet.id }  %>
+          </span>
+      </ul>
+    <% end %>
+  <% end %>
+</div>
