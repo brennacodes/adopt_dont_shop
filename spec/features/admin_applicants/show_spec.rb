@@ -12,17 +12,27 @@ RSpec.describe 'admin applicants show page' do
   let!(:pet_1) {Pet.create!(adoptable: true, age: 1, breed: 'sphynx', name: 'Lucille Bald', shelter_id: shelter_1.id)}
   let!(:shelter_1) {Shelter.create!(name: 'Aurora shelter', city: 'Aurora, CO', foster_program: false, rank: 9)}
   let!(:applicant_pets) {ApplicantPet.create!(applicant_id: sally.id, pet_id: pet_1.id)}
-  it 'has the ability to approve the pet' do
 
-
-
+  it 'has the ability to approve the application for the pet' do
   visit "/admin/applicants/#{sally.id}"
-  
+
     within "#pet-0" do
       click_button "Approve Application"
     end
     save_and_open_page
-    # expect(page).not_to have_text("Approve Application")
-    # expect(page).to have_text("X")
+    expect(page).to have_text("You have been approved")
+    expect(page).to_not have_text("You have been rejected")
+
+  end
+
+  it 'has the ability to reject the application for the pet' do
+    visit "/admin/applicants/#{sally.id}"
+
+      within "#pet-0" do
+        click_button "Reject Application"
+      end
+
+    expect(page).to have_text("You have been rejected")
+    expect(page).to_not have_text("You have been appoved")
   end
 end

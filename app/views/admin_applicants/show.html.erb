@@ -1,19 +1,27 @@
+<h1>Application</h1>
 
+<section>
+  <p><strong>Name: </strong><%= @applicant.name %></p>
+  <p><strong>Address: </strong><%= @applicant.address %></p>
+  <p><strong>Application Status: </strong><%= @applicant.status %></p>
+  <p><strong>Why I'd be a good home: </strong><%= @applicant.description %></p>
+</section>
 
 <div class="pets">
   <p><strong>Pets Applied For: </strong></p>
+    <% if @applicant.pets.empty? %>
+    <p><i>You haven't applied for any pets.</i></p>
+    <% end %>
   <% @applicant.pets.each_with_index do |pet, index| %>
       <div id="pet-<%= index %>">
-    <% if @applicant.pets.empty? %>
-      <p><i>You haven't applied for any pets.</i></p>
+    <li><%= link_to "#{pet.name}","/pets/#{pet.id}" %></li>
+    <% if @applicant.applicant_pets.find_by(pet_id: pet.id).status == "Approved" %>
+      <p>You have been approved</p>
+    <% elsif %>
+      <%= button_to "Approve Application", "/admin/applicants/#{@applicant.id}", method: :patch, params: { pet_id: pet.id }  %>
+      <%= button_to "Reject Application", "/admin/applicants/#{@applicant.id}", method: :patch, params: { pet_id: pet.id }  %>
     <% else %>
-      <ul>
-        <span>
-          <li><%= link_to "#{pet.name}","/pets/#{pet.id}" %></li>
-
-            <%= button_to "Approve Application", "/admin/applicants/#{@applicant.id}", method: :patch, params: { pet_id: pet.id }  %>
-          </span>
-      </ul>
+      <p>You have been rejected</p>
     <% end %>
   <% end %>
 </div>
