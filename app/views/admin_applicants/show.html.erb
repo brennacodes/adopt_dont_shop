@@ -1,5 +1,4 @@
 <h1>Application</h1>
-
 <section>
   <p><strong>Name: </strong><%= @applicant.name %></p>
   <p><strong>Address: </strong><%= @applicant.address %></p>
@@ -16,12 +15,9 @@
       <div id="pet-<%= index %>">
     <li><%= link_to "#{pet.name}","/pets/#{pet.id}" %></li>
     <% if @applicant.applicant_pets.find_by(pet_id: pet.id).status == "Approved" %>
-      <p>You have been approved</p>
-    <% elsif %>
-      <%= button_to "Approve Application", "/admin/applicants/#{@applicant.id}", method: :patch, params: { pet_id: pet.id }  %>
-      <%= button_to "Reject Application", "/admin/applicants/#{@applicant.id}", method: :patch, params: { pet_id: pet.id }  %>
+          <p>You have been approved</p>
     <% else %>
-      <p>You have been rejected</p>
+      <%= button_to "Approve Application", "/admin/applicants/#{@applicant.id}", method: :patch, params: { pet_id: pet.id }  %>
     <% end %>
   <% end %>
 </div>
