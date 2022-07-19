@@ -15,24 +15,22 @@ RSpec.describe 'admin applicants show page' do
 
   it 'has the ability to approve the application for the pet' do
   visit "/admin/applicants/#{sally.id}"
-
+    expect(page).to have_button("Approve Application")
     within "#pet-0" do
       click_button "Approve Application"
     end
     save_and_open_page
-    expect(page).to have_text("You have been approved")
-    expect(page).to_not have_text("You have been rejected")
-
-  end
-
-  it 'has the ability to reject the application for the pet' do
-    visit "/admin/applicants/#{sally.id}"
-
-      within "#pet-0" do
-        click_button "Reject Application"
-      end
-
-    expect(page).to have_text("You have been rejected")
-    expect(page).to_not have_text("You have been appoved")
+    expect(page).to have_no_button("Approve Application")
   end
 end
+#   xit 'has the ability to reject the application for the pet' do
+#     visit "/admin/applicants/#{sally.id}"
+#
+#       within "#pet-0" do
+#         click_button "Reject Application"
+#       end
+#
+#     expect(page).to have_text("You have been rejected")
+#     expect(page).to_not have_text("You have been appoved")
+#   end
+# end
