@@ -9,17 +9,18 @@ RSpec.describe 'admin applicants show page' do
   # And next to the pet that I approved, I do not see a button to approve this pet
   # And instead I see an indicator next to the pet that they have been approved
   let!(:sally) {Applicant.create!(name: 'Sally', address: '123 California St, Boulder, CO, 80304', description: 'I rock!', status: "Pending")}
+  let!(:joe) {Applicant.create!(name: 'Joe', address: '123 Colorado St, Boulder, CO, 80304', description: 'I need a friend!', status: "Pending")}
   let!(:pet_1) {Pet.create!(adoptable: true, age: 1, breed: 'sphynx', name: 'Lucille Bald', shelter_id: shelter_1.id)}
   let!(:shelter_1) {Shelter.create!(name: 'Aurora shelter', city: 'Aurora, CO', foster_program: false, rank: 9)}
-  let!(:applicant_pets) {ApplicantPet.create!(applicant_id: sally.id, pet_id: pet_1.id)}
+  let!(:applicant_pets_1) {ApplicantPet.create!(applicant_id: sally.id, pet_id: pet_1.id)}
+  let!(:applicant_pets_2) {ApplicantPet.create!(applicant_id: joe.id, pet_id: pet_1.id)}
 
   it 'has the ability to approve the application for the pet' do
-  visit "/admin/applicants/#{sally.id}"
+    visit "/admin/applicants/#{sally.id}"
     expect(page).to have_button("Approve Application")
     within "#pet-0" do
       click_button "Approve Application"
     end
-
     expect(page).to have_no_button("Approve Application")
     expect(page).to have_text("You have been approved")
   end
@@ -33,5 +34,23 @@ RSpec.describe 'admin applicants show page' do
 
     expect(page).to have_text("You have been rejected")
     expect(page).to_not have_text("You have been approved")
+  end
+
+  it 'when two applicants apply for the same pet' do
+    visit "/admin/applicants/#{sally.id}"
+
+    expect(page).to have_button("Approve Application")
+
+      within "#pet-0" do
+        click_button "Approve Application"
+      end
+      save_and_open_page
+    expect(page).to have_no_button("Approve Application")
+    expect(page).to have_text("You have been approved")
+
+    visit "/admin/applicants/#{joe.id}"
+      save_and_open_page
+    expect(page).to have_button("Approve Application")
+    expect(page).not_to have_text("You have been approved")
   end
 end
