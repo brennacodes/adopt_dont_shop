@@ -29,4 +29,12 @@ class Applicant < ApplicationRecord
   def self.pending_applicants
     where(status: "Pending")
   end
+
+  def application_pending?(pet_id)
+    application_status(pet_id) == "Pending"
+  end
+
+  def application_status(pet_id)
+    applicant_pets.find_by(pet_id: pet_id)&.status
+  end
 end
