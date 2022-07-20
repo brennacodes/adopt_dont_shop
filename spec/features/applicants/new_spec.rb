@@ -25,10 +25,16 @@ RSpec.describe 'New Applicants' do
   it 'can send an error message if the form fields are not filled in' do
     visit '/applicants/new'
 
-    click_on 'Create Application'
+    within 'section' do
+      fill_in 'name', with: 'Sally'
+      fill_in 'description', with: 'I rock!'
 
-    expect(page).to have_content("errors prohibited this applicant from being saved")
+      click_on 'Create Application'
+    end
+    save_and_open_page
+    expect(current_path).to eq("/applicants/new")
+    expect(page).to have_content("You cannot submit an application with any fields left blank")
     # expect(status).to eq(302)
     # will not recognize redirect due to conditional in controlloer action
-  end  
+  end
 end

@@ -7,7 +7,7 @@ class AdminsController < ApplicationController
     @pending = Shelter.with_pending_applicants
   end
 
-  def applicants
-    @applicants = Applicant.pending
-  end
+  # def applicants
+  #   @applicants = Applicant.pending
+  # end
 end
