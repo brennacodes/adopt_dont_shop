@@ -83,8 +83,8 @@ RSpec.describe 'applicant show page' do
 
       click_on "Add Pet to Application"
     end
-    
-    within('pets_applied') do
+
+    within ".pets_applied" do
       expect(page).to have_content("Mr. Pirate")
     end
 
