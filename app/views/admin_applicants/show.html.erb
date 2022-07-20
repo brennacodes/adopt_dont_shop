@@ -14,10 +14,11 @@
   <% @applicant.pets.each_with_index do |pet, index| %>
       <div id="pet-<%= index %>">
     <li><%= link_to "#{pet.name}","/pets/#{pet.id}" %></li>
-    <% if @applicant.applicant_pets.find_by(pet_id: pet.id).status == "Approved" %>
-          <p>You have been approved</p>
+    <% if !@applicant.application_pending?(pet.id) %>
+          <p>You have been <%= @applicant.application_status(pet.id).downcase %></p>
     <% else %>
-      <%= button_to "Approve Application", "/admin/applicants/#{@applicant.id}", method: :patch, params: { pet_id: pet.id }  %>
+      <%= button_to "Approve Application", "/admin/applicants/#{@applicant.id}", method: :patch, params: { pet_id: pet.id, status: "Approved" }  %>
+      <%= button_to "Reject Application", "/admin/applicants/#{@applicant.id}", method: :patch, params: { pet_id: pet.id, status: "Rejected"}  %>
     <% end %>
   <% end %>
 </div>
